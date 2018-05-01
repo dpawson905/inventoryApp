@@ -20,18 +20,24 @@ router
     res.render("addItem");
   })
 
-  .post(middleware.isLoggedIn, function(req, res) {
-    var item = new Item();
-    item.name = req.body.name;
-    item.description = req.body.description;
-    item.price = req.body.price;
-
-    item.save(function(err) {
+  .post(function(req, res) {
+    User.findById(req.user._id, function(user, err) {
       if (err) {
-        res.send(err);
+        console.log(err);
       }
-      res.json({ message: "Item was successfully saved" });
-      console.log(item);
+      var item = new Item();
+      item.name = req.body.name;
+      item.description = req.body.description;
+      item.price = req.body.price;
+      item.createdBy = { id: req.user._id, username: req.user.username };
+
+      item.save(function(err) {
+        if (err) {
+          res.send(err);
+        }
+        res.json({ message: "Item was successfully saved" });
+        console.log(item);
+      });
     });
   });
 

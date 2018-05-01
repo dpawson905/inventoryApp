@@ -41,7 +41,7 @@ router
     });
   });
 
-router.route("/item/:item")
+router.route("/item/:item/")
   .get(function(req, res) {
     res.send("Welcome to the specific item page");
   })

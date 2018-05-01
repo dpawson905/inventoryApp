@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/cover.css">
+    <title>BCP Inventory Management</title>
+</head>
+<body class="text-center">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">BCP IMS</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" href="/auth/login">Admin</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">BCP Inventory Management</h1>
+            <p class="lead">Click the button below to view current inventory.</p>
+            <p class="lead">
+                <a href="#" class="btn btn-lg btn-secondary">View Inventory</a>
+            </p>
+        </main>
+
+        <% if(error && error.length > 0) { %>
+            <div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0) { %>
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <%= success %>
+            </div>
+        <% } %>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Designed for BCP Inventory Management, by
+                    <a href="https://djpawson.me">Darrell Pawson</a>.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/tether.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

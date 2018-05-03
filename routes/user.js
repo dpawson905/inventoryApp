@@ -11,7 +11,7 @@ router
   })
 
   .post(function(req, res, next) {
-    passport.authenticate("local", function(err, user, info) {
+    passport.authenticate("local", function(err, user) {
       if (err) {
         return next(err);
       }
@@ -52,11 +52,11 @@ router
       User.register(newUser, req.body.password, function(err, user) {
         if (err) {
           req.flash("error", err.message);
-          res.redirect('/')
+          res.redirect("/auth/register");
         }
         passport.authenticate("local")(req, res, function() {
           req.flash("success", "Welcome to BCP " + user.username);
-          res.redirect("/");
+          res.redirect("/products");
         });
       });
     } else {

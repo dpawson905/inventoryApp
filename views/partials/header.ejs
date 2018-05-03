@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link href="/stylesheets/navbar-top-fixed.css" rel="stylesheet">
     <link href="/stylesheets/sticky-footer.css" rel="stylesheet">
+    <link href="/stylesheets/main.css" rel="stylesheet">
     <title>BCP Inventory Management</title>
 </head>
 
@@ -31,6 +32,11 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/products/item/add">Add Item
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products/<%= user._id %>">View Inventory
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>

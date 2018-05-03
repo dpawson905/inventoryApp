@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const User = require('./user');
+const mongoose = require("mongoose");
+const User = require("./user");
+const Item = require("./items");
 
 const ItemSchema = new mongoose.Schema({
   name: {
@@ -16,17 +17,19 @@ const ItemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  image: String,
+  noImage: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   createdBy: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
     username: String
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
 });
 
-module.exports = mongoose.model("items", ItemSchema);
+module.exports = mongoose.model("Items", ItemSchema);

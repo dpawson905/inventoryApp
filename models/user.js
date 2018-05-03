@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require("passport-local-mongoose");
+const Item = require("./items");
+const User = require("./user");
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -27,8 +29,12 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
+  items: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Items"
+    }
+  ],
   isAdmin: {
     type: Boolean,
     default: false
@@ -37,4 +43,4 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model("User", UserSchema);

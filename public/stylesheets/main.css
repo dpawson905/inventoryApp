@@ -6,3 +6,7 @@
 .c-width {
     width: 200px;
 }
+
+.white {
+    color: #fff !important;
+}

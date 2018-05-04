@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
+  <title>BCP | Products</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/stylesheets/album.css" rel="stylesheet">
+  <link href="/stylesheets/product.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand white">BCP IMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <% if(!currentUser){ %>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Admin
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
+        <% } else { %>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/products">View Products
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/products/item/add">Add Item
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/products/<%= currentUser._id %>">View
+                <%=currentUser.firstName %>'s Inventory
+                  <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Hello
+                <%= currentUser.username %>
+                  <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/logout">Logout
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          </ul>
+          <% } %>
+    </div>
+  </nav>
+
+  <main role="main">
+
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Our Products</h1>
+        <p class="lead text-muted">Browse our products and if you find something you are interested in, click on the item and then click on the contact
+          button.</p>
+      </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <% if (items.length < 1) { %>
+            <h1>No Items Posted Yet</h1>
+          <% } else { %>
+            <% items.forEach( item => { %>
+              <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                  <img class="card-img-top img-set" src="<%= item.image %>" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text"><%= item.description %></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <a class="btn btn-sm btn-outline-secondary" href="/products/item/<%=item._id%>">View</a>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </div>
+                      <small class="text-muted">Price: $<%= item.price %></small>
+                      <small class="text-right">Qty: <%= item.quantity %></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container-footer">
+      <span class="text-muted">&copy; 2018 Designed for BCP Inventory Management by
+        <a href="https://djpawson.me">Darrell Pawson</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="/js/jquery-3.3.1.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/js/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.11/js/all.js" integrity="sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

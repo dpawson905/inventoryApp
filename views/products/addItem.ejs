@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Floating labels example for Bootstrap</title>
+    <title>Add Item</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
@@ -37,6 +37,24 @@
         <div class="form-label-group">
             <input type="number" name="price" id="price" class="form-control" min="1" step="any" placeholder="Item Price" required>
             <label for="price">Item Price</label>
+        </div>
+
+        <div class="form-label-group">
+            <input type="number" name="quantity" id="quantity" class="form-control" min="1" step="any" placeholder="Quantity" required>
+            <label for="quantity">Quantity</label>
+        </div>
+
+        <div class="form-label-group">
+            <select data-style="btn-info" name="itemType">
+                <optgroup label="Item type">
+                    <option name="" value="0">Select Item Type</option>
+                    <option name="Baby Goods" value="Baby Goods">Baby Goods</option>
+                    <option name="Electronics" value="Electronics">Electronics</option>
+                    <option name="Small Appliances" value="Small Appliances">Small Appliances</option>
+                    <option name="Candles" value="Candles">Candles</option>
+                    <option name="Misc" value="Misc">Misc</option>
+                </optgroup>
+            </select>
         </div>
 
         <div class="form-label-group">

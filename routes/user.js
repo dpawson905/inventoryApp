@@ -6,7 +6,7 @@ var User = require("../models/user");
 router
   .route("/login")
   .get(function(req, res) {
-    res.render("login");
+    res.render("auth/login");
   })
 
   .post(function(req, res, next) {
@@ -15,6 +15,7 @@ router
         return next(err);
       }
       if (!user) {
+        req.flash("error", "The username or password was incorrect");
         return res.redirect("/");
       }
       req.logIn(user, function(err) {
@@ -33,7 +34,7 @@ router
 router
   .route("/register")
   .get(function(req, res) {
-    res.render("register");
+    res.render("auth/register");
   })
 
   .post(function(req, res) {
@@ -51,7 +52,7 @@ router
       User.register(newUser, req.body.password, function(err, user) {
         if (err) {
           req.flash("error", err.message);
-          res.redirect("/auth/register");
+          res.redirect("auth/register");
         }
         passport.authenticate("local")(req, res, function() {
           req.flash("success", "Welcome to BCP " + user.username);

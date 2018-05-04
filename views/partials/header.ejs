@@ -14,7 +14,7 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">BCP IMS</a>
+        <a class="navbar-brand white">BCP IMS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,6 +30,11 @@
                 </ul>
             <% } else { %>
                 <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">View Products
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/products/item/add">Add Item
                             <span class="sr-only">(current)</span>
@@ -56,7 +61,7 @@
             <% } %>
         </div>
     </nav>
-    
+
     <div class="container">
     <% if(error && error.length > 0) { %>
       <div class="alert alert-danger alert-dismissible">

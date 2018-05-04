@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Floating labels example for Bootstrap</title>
+    <title>Register</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
@@ -18,10 +18,20 @@
 </head>
 
 <body>
-    <form class="form-signin" id="register" action="/auth/login" method="POST">
+    <form class="form-signin" id="register" action="/auth/register" method="POST">
         <div class="text-center mb-4">
             <img class="mb-4" src="/assets/bootstrap-solid.svg" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Admin Registration</h1>
+        </div>
+
+        <div class="form-label-group">
+            <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name" required>
+            <label for="firstName">First Name</label>
+        </div>
+
+        <div class="form-label-group">
+            <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name" required>
+            <label for="lastName">Last Name</label>
         </div>
 
         <div class="form-label-group">
@@ -30,8 +40,18 @@
         </div>
 
         <div class="form-label-group">
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required>
+            <label for="email">Email address</label>
+        </div>
+
+        <div class="form-label-group">
             <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
             <label for="password">Password</label>
+        </div>
+
+        <div class="form-label-group">
+            <input type="text" name="adminCode" id="adminCode" class="form-control" placeholder="Admin Code" required>
+            <label for="adminCode">Admin Code</label>
         </div>
 
         <div class="checkbox mb-3">

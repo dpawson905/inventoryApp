@@ -29,7 +29,9 @@ const ItemSchema = new mongoose.Schema({
       ref: "User"
     },
     username: String
-  }
+  },
+  quantity: Number,
+  itemType: String
 });
 
 module.exports = mongoose.model("Items", ItemSchema);

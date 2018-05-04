@@ -15,15 +15,23 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage }).single("image");
 
-router.get("/", middleware.isLoggedIn, (req, res) => {
-  Promise.all([User.findById(req.user._id), Item.find({})])
-    .then(results => {
-      let [userDetails, items] = results;
-      return res.render("products", { items: items, user: userDetails });
-    })
-    .catch(err => {
-      return console.log("err", err.stack);
-    });
+router.get("/", (req, res) => {
+  Item.find({}, (err, allItems) => {
+    if(err) {
+      req.flash("error", "Could not find any Items");
+      res.redirect("back");
+    } else {
+      res.render("products/products", {items: allItems});
+    }
+  });
+  // Promise.all([User.findById(req.user._id), Item.find({})])
+  //   .then(results => {
+  //     let [userDetails, items] = results;
+  //     return res.render("products/products", { items: items, user: userDetails });
+  //   })
+  //   .catch(err => {
+  //     return console.log("err", err.stack);
+  //   });
 });
 
 router.get("/:id", middleware.isLoggedIn, function(req, res) {
@@ -33,7 +41,7 @@ router.get("/:id", middleware.isLoggedIn, function(req, res) {
       res.render("index");
     } else {
       Item.find()
-        .where("creadtedBy.id")
+        .where("createdBy.id")
         .equals(foundUser._id)
         .exec(function(err, items) {
           if (err || !foundUser) {
@@ -42,7 +50,7 @@ router.get("/:id", middleware.isLoggedIn, function(req, res) {
           }
           console.log("user" + foundUser);
           console.log("items" + items);
-          res.render("inventory", {
+          res.render("products/inventory", {
             user: foundUser,
             items: items
           });
@@ -52,7 +60,7 @@ router.get("/:id", middleware.isLoggedIn, function(req, res) {
 });
 
 router.get("/item/add", middleware.isLoggedIn, (req, res) => {
-  res.render("addItem");
+  res.render("products/addItem");
 });
 
 router.post("/item/add", middleware.isLoggedIn, (req, res) => {
@@ -66,17 +74,21 @@ router.post("/item/add", middleware.isLoggedIn, (req, res) => {
       if (typeof req.file !== "undefined") {
         var image = "/uploads/" + req.file.filename;
       } else {
-        image = "/uploads/no-img.PNG";
+        image = "/uploads/no-img.png";
       }
       var description = req.body.description;
       var price = req.body.price;
       var createdBy = { id: req.user._id, username: req.user.username };
+      var quantity = req.body.quantity;
+      var itemType = req.body.itemType;
       var newItem = {
         name: name,
         image: image,
         description: description,
         price: price,
-        createdBy: createdBy
+        createdBy: createdBy,
+        quantity: quantity,
+        itemType: itemType
       };
       Item.create(newItem, (err, newlyCreated) => {
         if (err) {

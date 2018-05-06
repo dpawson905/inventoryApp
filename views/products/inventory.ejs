@@ -18,26 +18,21 @@
                     <tbody>
                     <% items.forEach( item => { %>
                         <tr>
-                            <th scope="row"><%= item.createdAt.toDateString() %></th>
-                            <th scope="row"><img class="img-sm" src="<%= item.image %>"></th>
-                            <th scope="row"><%= item.name %></th>
-                            <td><%= item.description %></td>
-                            <td><%= item.price %></td>
-                            <% if(!currentUser){ %>
-                                <td>
-                                    <a class="btn btn-primary btn-sm btn-adj" href="/products/item/<%= item._id %>">Info</a>
-                                </td>
-                            <% } else { %>
-                                <td>
-                                    <a class="btn btn-primary btn-sm btn-adj" href="/products/item/<%= item._id %>">Info</a>
-                                    <a class="btn btn-warning btn-sm btn-adj" href="/products/item/<%= item._id %>">Edit</a>
+                            <td scope="row"><%= item.createdAt.toDateString() %></td>
+                            <td scope="row"><img class="img-sm" src="<%= item.image %>"></td>
+                            <td scope="row"><a href=""><%= item.name %></a></td>
+                            <td scope="row"><%= item.description %></td>
+                            <td scope="row"><%= item.price %></td>
+                            <td scope="row">
+                                <div class="btn-group">
+                                    <a class="btn btn-warning btn-sm" href="/products/item/<%= item._id %>/update">Update</a>
                                     <form id="delete-form" action="/products/item/<%= item._id %>?_method=DELETE" method="POST">
-                                        <button class="btn btn-danger btn-sm btn-adj" href="/products/item/<%= item._id %>">Delete</button>
+                                        <button class="btn btn-danger btn-sm" href="/products/item/<%= item._id %>">Delete</button>
                                     </form>
-                                </td>
-                            <% } %>
+                                </div>
+                            </td>
                         </tr>
-                        <% }) %>
+                    <% }) %>
                     </tbody>
                 </table>
             </div>

@@ -3,6 +3,12 @@
     height: auto;
 }
 
+.img-lg {
+    width: 800px;
+    height: auto;
+    margin: 0 auto;
+}
+
 .c-width {
     width: 200px;
 }

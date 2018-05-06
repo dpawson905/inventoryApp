@@ -17,11 +17,11 @@ var upload = multer({ storage: storage }).single("image");
 
 router.get("/", (req, res) => {
   Item.find({}, (err, allItems) => {
-    if(err) {
+    if (err) {
       req.flash("error", "Could not find any Items");
       res.redirect("back");
     } else {
-      res.render("products/products", {items: allItems});
+      res.render("products/products", { items: allItems });
     }
   });
   // Promise.all([User.findById(req.user._id), Item.find({})])
@@ -48,8 +48,6 @@ router.get("/:id", middleware.isLoggedIn, function(req, res) {
             req.flash("error", "Something went wrong");
             res.render("index");
           }
-          console.log("user" + foundUser);
-          console.log("items" + items);
           res.render("products/inventory", {
             user: foundUser,
             items: items
@@ -103,19 +101,25 @@ router.post("/item/add", middleware.isLoggedIn, (req, res) => {
   });
 });
 
-router.get("/item/:id", middleware.isLoggedIn, (req, res) => {
-  res.send("Welcome to the items specific page");
+router.get("/item/:id", (req, res) => {
+  Item.findById(req.params.id, (err, foundItem) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("products/item", { item: foundItem });
+    }
+  });
 });
 
 router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
-  Item.findByIdAndRemove(req.params.id, err => {
-    if (err) {
-      req.flash("error", err);
+  Promise.all([User.update({_id: req.user._id}, {$pull: {items: req.params.id}}), Item.findByIdAndRemove(req.params.id)])
+    .then(() => {
+      req.flash("success", "Item Deleted");
       res.redirect("back");
-    }
-    req.flash("success", "Item Deleted");
-    res.redirect("back");
-  });
+    })
+    .catch(err => {
+      return console.log("err", err.stack);
+    });
 });
 
 module.exports = router;

@@ -1,2 +1,48 @@
-<% include ../partials/header %>
-<% include ../partials/footer %>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Sell Item</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/floating-labels.css" rel="stylesheet">
+</head>
+
+<body>
+    <form class="form-signin" id="itemAdd" action="/products/item/<%= item._id %>" method="POST">
+        <div class="text-center mb-4">
+            <img class="mb-4" src="/assets/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Update <%= item.name %></h1>
+            <h4 class="h3 mb-3 font-weight-normal">Original Price: $<%= item.price %>.00</h4>
+        </div>
+
+        <div class="form-label-group">
+            <input type="number" name="soldPrice" id="soldPrice" class="form-control" min="1" step="any" placeholder="Sold Price" required>
+            <label for="soldPrice">Sold Price</label>
+        </div>
+
+        <div class="form-label-group">
+            <input type="number" name="soldQuantity" id="soldQuantity" class="form-control"  placeholder="Sold Quantity" required>
+            <label for="soldQuantity"> Sold Quantity</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <a class="btn btn-success" href="/products">Go back</a>
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Update Item</button>
+        <p class="mt-5 mb-3 text-center">&copy; 2017-2018</p>
+    </form>
+</body>
+
+</html>

@@ -10,13 +10,11 @@ const SoldItemSchema = new mongoose.Schema({
       ref: "Items"
     },
     item: String,
+    name: String,
+    askPrice: Number
   },
-  soldQuantity: String,
-  askPrice: Number,
+  soldQuantity: Number,
   soldPrice: Number,
-  totalPrice: {
-    $multiply: ["$quantity", "$soldPrice"]
-  }
 });
 
-module.exports = mongoose.model("soldItems", SoldItemSchema);
+module.exports = mongoose.model("SoldItems", SoldItemSchema);

@@ -137,8 +137,10 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
     // Do casting manually because you really want to
     let soldPrice = parseFloat(req.body.soldPrice);
     let soldQuantity = parseInt(req.body.soldQuantity);
+    let soldDate = Date.now();
+    let totalPrice = soldPrice * soldQuantity;
 
-    let soldItem = {
+    let refItem = {
       id: item._id,
       item: item.name,
       askPrice: item.price
@@ -146,9 +148,10 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
 
     // create the sold item
     let newSoldItem = await SoldItem.create({
-      soldItem,
+      refItem,
       soldPrice,
-      soldQuantity
+      soldQuantity,
+      totalPrice
     });
 
     // update the item
@@ -158,7 +161,7 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
     req.flash("success", "Item Sold");
     res.redirect("/products");
   } catch (e) {
-    console.log("err", err.stack);
+    console.log("err", e.stack);
     // really should send the error on res here as well
   }
 })

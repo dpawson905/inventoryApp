@@ -3,18 +3,26 @@ const User = require("./user");
 const Item = require("./items");
 const SoldItem = require("./soldItems");
 
-const SoldItemSchema = new mongoose.Schema({
-  soldItem: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Items"
+const SoldItemSchema = new mongoose.Schema(
+  {
+    refItem: {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Items"
+      },
+      item: String,
+      name: String,
+      askPrice: Number
     },
-    item: String,
-    name: String,
-    askPrice: Number
+    soldQuantity: Number,
+    soldPrice: Number,
+    totalPrice: Number,
+    soldDate: {
+      type: Date,
+      default: Date.now
+    }
   },
-  soldQuantity: Number,
-  soldPrice: Number,
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("SoldItems", SoldItemSchema);

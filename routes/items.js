@@ -200,15 +200,27 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
 //     });
 // });
 
-router.delete("/item/:id", middleware.isLoggedIn, async(req, res) => {
-  try {
-    User.update({ _id: req.user._id }, { $pull: { items: req.params.id } });
-    Item.findByIdAndRemove(req.params.id);
-    req.flash("Success", "Item Deleted");
-    res.redirect("back");
-  } catch (e) {
-    console.log(e);
-  }
+// router.delete("/item/:id", middleware.isLoggedIn (req, res) => {
+    
+    
+    
+    
+  
+// });
+
+// /products/item/item_id delete route
+router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
+  Promise.all([
+    User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
+    Item.findByIdAndRemove(req.params.id)
+  ])
+    .then(() => {
+      req.flash("success", "Item Deleted");
+      res.redirect("back");
+    })
+    .catch(err => {
+      return console.log("err", err.stack);
+    });
 });
 
 module.exports = router;

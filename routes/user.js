@@ -56,7 +56,7 @@ router
         }
         passport.authenticate("local")(req, res, function() {
           req.flash("success", "Welcome to BCP " + user.username);
-          res.redirect("/products");
+          res.redirect("/products/inventory/" + user._id);
         });
       });
     } else {

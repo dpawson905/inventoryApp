@@ -205,15 +205,14 @@ router.delete("/item/:id", middleware.isLoggedIn, async(req, res) => {
     let item = await Item.findById(req.params.id);
     await User.update({ _id: req.user._id }, { $pull: { items: req.params.id } });
     await fs.unlinkSync(__dirname + "../../public" + item.image);
-    await fs
+    await Item.findByIdAndRemove(req.params.id);
+    fs
       .createReadStream(__dirname + "../../public/uploads/backup/no-image.png")
       .pipe(
         fs.createWriteStream(
           __dirname + "../../public/uploads/no-img/no-image.png"
         )
       );
-    await Item.findByIdAndRemove(req.params.id);
-
     req.flash("Success", "Item Deleted");
     res.redirect("back");
   } catch (e) {

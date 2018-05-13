@@ -204,7 +204,7 @@ router.delete("/item/:id", middleware.isLoggedIn, async(req, res) => {
       )
 
     req.flash("success", "Item Sold");
-    res.redirect("back");
+    res.redirect("/products/inventory/" + req.user._id);
   } catch (err) {
     console.log("err", err);
   }

@@ -97,11 +97,12 @@ router.post("/item/add", middleware.isLoggedIn, (req, res) => {
       };
       Item.create(newItem, (err, newlyCreated) => {
         if (err) {
-          return console.log(err);
+          req.flash("error", err.message);
+          res.redirect("back");
         } else {
           user.items.push(newlyCreated);
           user.save();
-          res.redirect("/products/inventory" + req.user._id);
+          res.redirect("/products/inventory/" + req.user._id);
         }
       });
     });
@@ -119,7 +120,7 @@ router.get("/item/:id", (req, res) => {
   });
 });
 
-router.get("/item/:id/update", (req, res) => {
+router.get("/item/:id/sellitem", (req, res) => {
   Item.findById(req.params.id, (err, foundItem) => {
     if (err) {
       console.log(err);

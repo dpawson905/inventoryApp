@@ -22,10 +22,11 @@
         <div class="text-center mb-4">
             <img class="mb-4" src="/assets/bootstrap-solid.svg" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Add Item</h1>
+            <% include ../partials/message %>
         </div>
 
         <div class="form-label-group">
-            <input type="text" name="name" id="name" class="form-control" placeholder="Item Name" required>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Item Name" required autofocus>
             <label for="name">Item Name</label>
         </div>
 
@@ -53,6 +54,17 @@
                     <option name="Small Appliances" value="Small Appliances">Small Appliances</option>
                     <option name="Candles" value="Candles">Candles</option>
                     <option name="Misc" value="Misc">Misc</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="form-label-group">
+            <select data-style="btn-info" name="palletNumber">
+                <optgroup label="Pallet Number">
+                    <option name="" value="0">Select Pallet Number</option>
+                    <% for(var i = 1; i <= 50; i+= 1) {%>
+                        <option name="<%=i%>" value="<%=i%>"><%=i%></option>
+                    <% } %>
                 </optgroup>
             </select>
         </div>

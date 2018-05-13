@@ -7,15 +7,15 @@ const ItemSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      minlength: 3,
-      maxlength: 20
+      minlength: [3, "Item name must be more than 3 characters long"],
+      maxlength: 50
     },
     description: {
       type: String,
       required: true
     },
     price: {
-      type: Number,
+      type: mongoose.Schema.Types.Decimal128,
       required: true
     },
     image: String,
@@ -28,7 +28,8 @@ const ItemSchema = new mongoose.Schema(
       username: String
     },
     quantity: Number,
-    itemType: String
+    itemType: String,
+    palletNumber: Number
   },
   { timestamps: true }
 );

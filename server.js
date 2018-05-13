@@ -11,6 +11,8 @@ const helmet = require("helmet");
 const session = require("express-session");
 const User = require("./models/user");
 
+require("dotenv").config();
+
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/user");
 const itemRoute = require("./routes/items");
@@ -32,7 +34,7 @@ app.use(cookieParser());
 // Passport config
 app.use(
   session({
-    secret: "its a secret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
   })

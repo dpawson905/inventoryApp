@@ -13,17 +13,10 @@ body {
   width: 100%;
   height: 60px; /* Set the fixed height of the footer here */
   line-height: 60px; /* Vertically center the text there */
-  background-color: #343a40;
+  background-color: steelblue;
   color: #fff;
+  overflow: hidden;
 }
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-.container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
-}
+ .footer a{
+   color: #fff;
+ }

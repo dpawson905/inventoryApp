@@ -46,7 +46,7 @@ router
       loggedIn: false
     });
 
-    if (req.body.adminCode === "bcp") {
+    if (req.body.adminCode === process.env.ADMIN_CODE) {
       newUser.isAdmin = true;
 
       User.register(newUser, req.body.password, function(err, user) {

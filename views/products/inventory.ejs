@@ -1,42 +1,38 @@
 <% include ../partials/header %>
-<div class="bg-blue">
-    <div class="container-fluid">
-        <div class="row text-center">
-            <div class="col">
-                <h4>Items posted by <%= user.firstName %></h4>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date Added</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Link</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <% items.forEach( item => { %>
-                        <tr>
-                            <td scope="row"><%= item.createdAt.toDateString() %></td>
-                            <td scope="row"><img class="img-sm" src="<%= item.image %>"></td>
-                            <td scope="row"><a href=""><%= item.name %></a></td>
-                            <td scope="row"><%= item.description %></td>
-                            <td scope="row"><%= item.price %></td>
-                            <td scope="row">
-                                <div class="btn-group">
-                                    <a class="btn btn-warning btn-sm" href="/products/item/<%= item._id %>/update">Update</a>
-                                    <form id="delete-form" action="/products/item/<%= item._id %>?_method=DELETE" method="POST">
-                                        <button class="btn btn-danger btn-sm" href="/products/item/<%= item._id %>">Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    <% }) %>
-                    </tbody>
-                </table>
-            </div>
+    <div class="jumbotron jumbotron-fluid bg-blue white">
+        <div class="container">
+            <% if (items.length < 1) { %>
+                <h1 class="text-center display-4">You have no items posted <%=user.username%></h1>
+            <% } else { %>
+                <h1 class="text-center display-4">Welcome, <%=user.username%> Here are your items.</h1>
+                <hr class="style-two-white">
+                <% include ../partials/message %>
+            <% } %>
         </div>
     </div>
-</div>
+    <div class="container-fluid">
+        <% items.forEach( item => { %>
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <img src="<%=item.image%>" alt="<%=item.name%>" class="img-fluid img-thumbnail">
+            </div>
+            <div class="col-md-5">
+                <h4><%=item.name%></h4>
+                <p><%=item.description%></p>
+            </div>
+            <div class="col-md-4">
+                <p>Price: <span class="text-muted">$<%=item.price%></span></p>
+                <p>Quantity: <span class="text-muted"><%=item.quantity%></span></p>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href=""  class="btn btn-primary hvr-grow-rotate">Update Item</a>
+                    <a href="/products/item/<%=item._id%>/sellitem" class="btn btn-info hvr-grow-rotate">Sell Item</a>
+                    <form id="delete-form" action="/products/item/<%= item._id %>?_method=DELETE" method="POST">
+                        <button href="" type="submit" class="btn btn-danger hvr-grow-rotate">Delete Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr class="style-two">
+        <% }); %>
+    </div>
 <% include ../partials/footer %>

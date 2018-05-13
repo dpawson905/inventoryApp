@@ -10,6 +10,7 @@ const methodOverride = require("method-override");
 const helmet = require("helmet");
 const session = require("express-session");
 const User = require("./models/user");
+const fs = require("fs");
 
 require("dotenv").config();
 
@@ -56,6 +57,7 @@ app.use(function(req, res, next) {
 app.use("/", indexRoute);
 app.use("/products", itemRoute);
 app.use("/auth", authRoute);
+
 
 // this is required for the server to init
 app.listen(port, process.env.IP, function() {

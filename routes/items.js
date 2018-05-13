@@ -212,17 +212,9 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
 router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
   Promise.all([
     User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
-    fs.unlinkSync(__dirname + "../../public" + item.image),
     Item.findByIdAndRemove(req.params.id)
   ])
     .then(() => {
-      fs
-       .createReadStream(__dirname + "../../public/uploads/backup/no-image.png")
-       .pipe(
-         fs.createWriteStream(
-           __dirname + "../../public/uploads/no-img/no-image.png"
-         )
-       ),
       req.flash("success", "Item Deleted");
       res.redirect("back");
     })

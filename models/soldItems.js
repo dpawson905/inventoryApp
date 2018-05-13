@@ -12,11 +12,12 @@ const SoldItemSchema = new mongoose.Schema(
       },
       item: String,
       name: String,
-      askPrice: Number
+      askPrice: mongoose.Schema.Types.Decimal128,
+      palletNumber: Number
     },
     soldQuantity: Number,
-    soldPrice: Number,
-    totalPrice: Number,
+    soldPrice: mongoose.Schema.Types.Decimal128,
+    totalPrice: mongoose.Schema.Types.Decimal128,
     soldDate: {
       type: Date,
       default: Date.now

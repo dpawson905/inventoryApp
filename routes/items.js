@@ -5,7 +5,8 @@ const User = require("../models/user");
 const Item = require("../models/items");
 const SoldItem = require("../models/soldItems");
 const middleware = require("../middleware");
-const async = require('async');
+const async = require("async");
+const fs = require("fs");
 
 // Set up multer for storing images
 var storage = multer.diskStorage({
@@ -79,21 +80,24 @@ router.post("/item/add", middleware.isLoggedIn, (req, res) => {
       if (typeof req.file !== "undefined") {
         var image = "/uploads/" + req.file.filename;
       } else {
-        image = "/uploads/no-img.png";
+        var noImage = "/uploads/no-img/no-image.png";
       }
       var description = req.body.description;
       var price = req.body.price;
       var createdBy = { id: req.user._id, username: req.user.username };
       var quantity = req.body.quantity;
       var itemType = req.body.itemType;
+      var palletNumber = req.body.palletNumber;
       var newItem = {
         name: name,
         image: image,
+        noImage: noImage,
         description: description,
         price: price,
         createdBy: createdBy,
         quantity: quantity,
-        itemType: itemType
+        itemType: itemType,
+        palletNumber: palletNumber
       };
       Item.create(newItem, (err, newlyCreated) => {
         if (err) {
@@ -131,7 +135,6 @@ router.get("/item/:id/sellitem", (req, res) => {
 });
 
 router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
-
   try {
     let item = await Item.findById(req.params.id);
 
@@ -144,7 +147,8 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
     let refItem = {
       id: item._id,
       item: item.name,
-      askPrice: item.price
+      askPrice: item.price,
+      palletNumber: item.palletNumber
     };
 
     // create the sold item
@@ -156,7 +160,7 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
     });
 
     // update the item
-    await item.update({ "$inc": { "quantity": (soldQuantity * -1) } });
+    await item.update({ $inc: { quantity: soldQuantity * -1 } });
 
     // Then respond
     req.flash("success", "Item Sold");
@@ -165,12 +169,26 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
     console.log("err", e.stack);
     // really should send the error on res here as well
   }
-})
+});
 
 // /products/item/item_id delete route
 router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
   Promise.all([
     User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
+    Item.findById(req.params.id, (err, item) => {
+      if (err) {
+        console.log(err);
+      } else {
+        fs.unlinkSync(__dirname + "../../public" + item.image);
+      }
+    }),
+    fs
+      .createReadStream(__dirname + "../../public/uploads/backup/no-image.png")
+      .pipe(
+        fs.createWriteStream(
+          __dirname + "../../public/uploads/no-img/no-image.png"
+        )
+      ),
     Item.findByIdAndRemove(req.params.id)
   ])
     .then(() => {

@@ -24,7 +24,7 @@ router
         }
         var redirectTo = req.session.redirectTo
           ? req.session.redirectTo
-          : "/products";
+          : "/products/inventory/" + user._id;
         delete req.session.redirectTo;
         res.redirect(redirectTo);
       });

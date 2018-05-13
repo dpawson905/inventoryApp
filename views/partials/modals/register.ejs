@@ -1,0 +1,52 @@
+ <!-- register modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Register</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="delete-form" action="/auth/register" method="POST">
+          <div class="modal-body">
+            <div class="text-center mb-4">
+              <img class="mb-4" src="/assets/bootstrap-solid.svg" alt="" width="72" height="72">
+            </div>
+
+            <div class="form-label-group">
+              <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name" required>
+              <label for="firstName">First Name</label>
+            </div>
+
+            <div class="form-label-group">
+              <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name" required>
+              <label for="lastName">Last Name</label>
+            </div>
+
+            <div class="form-label-group">
+              <input type="text" name="username" id="username" class="form-control" placeholder="User Name" required>
+              <label for="username">User Name</label>
+            </div>
+
+            <div class="form-label-group">
+              <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required>
+              <label for="email">Email address</label>
+            </div>
+
+            <div class="form-label-group">
+              <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+              <label for="password">Password</label>
+            </div>
+
+            <div class="form-label-group">
+              <input type="text" name="adminCode" id="adminCode" class="form-control" placeholder="Admin Code" required>
+              <label for="adminCode">Admin Code</label>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

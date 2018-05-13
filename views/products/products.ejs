@@ -5,14 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/sticky-footer.css">
   <link rel="stylesheet" href="/stylesheets/modal.css">
-  <title>BCP Inventory Management</title>
+  <link rel="stylesheet" href="/stylesheets/main.css">
+  <link rel="stylesheet" href="/stylesheets/product.css">
+  <title>BCP Products</title>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-blue">
+    <a class="navbar-brand white">BCP Products</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"     aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <% if (!currentUser) { %>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Products" aria-label="Search">
+        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link margin-sm" data-toggle="modal" data-target="#loginModal" href="#">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link margin-sm" data-toggle="modal" data-target="#registerModal" href="#">Register Admin</a>
+        </li>
+      </ul>
+    <% } else { %>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hvr-float-shadow" data-toggle="modal" data-target="#addItemModal" href="#">Add Item</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/products/inventory/<%= currentUser._id %>">View your inventory</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Products" aria-label="Search">
+        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link white">Hello, <%=currentUser.firstName%></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Logout</a>
+        </li>
+      </ul>
+    <% } %>
+    </div>
+    <% include ../partials/modals/login %>
+    <% include ../partials/modals/register %>
+    <% include ../partials/modals/addItem %>
+  </nav>
+
+  <div class="jumbotron jumbotron-fluid bg-blue white">
+    <div class="container">
+      <% if (items.length < 1) { %>
+        <h1 class="text-center display-4">No items have been posted yet</h1>
+      <% } else { %>
+        <h1 class="text-center display-4">BCP Items</h1>
+        <hr class="style-two-white">
+        <% include ../partials/message %>
+      <% } %>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <% items.forEach(function(item){ %>
+        <div class="col-md-4">
+          <div class="card text-white bg-blue mb-3 same-height">
+            <img class="card-img-top img-fluid same-size" src="<%= item.image %>" alt="<%= item.name %>">
+            <div class="card-header"><%= item.name %><span class="float-right">Price: $<%= item.price %></span></div>
+            <div class="card-body">
+              <p class="float-right small">Quantity: <%=item.quantity %></p>
+              <hr class="style-two-white mt-4">
+              <p class="card-text"><%= item.description %></p>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container-fluid">
+      <p class="text-center small">&copy; 2018 Designed for BCP Inventory Management by <a href="https://djpawson.me">Darrell Pawson</a></p>
+    </div>
+  </footer>
   <script src="/js/jquery-3.3.1.min.js"></script>
   <script src="/js/tether.min.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" 
+          integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" 
+          crossorigin="anonymous">
+  </script>
   <script src="/js/autoCloseAlert.js"></script>
 </body>
 </html>

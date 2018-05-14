@@ -27,7 +27,7 @@
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href=""  class="btn btn-primary hvr-grow-rotate">Update Item</a>
                     <a href="/products/item/<%=item._id%>/sellitem" class="btn btn-info hvr-grow-rotate">Sell Item</a>
-                    <form id="delete-form" action="/products/item/<%= item._id %>?_method=DELETE" method="POST">
+                    <form id="delete-form" action="/products/item/<%= item._id %>?_method=POST" method="POST">
                         <button href="" type="submit" class="btn btn-danger hvr-grow-rotate">Delete Item</button>
                     </form>
                 </div>

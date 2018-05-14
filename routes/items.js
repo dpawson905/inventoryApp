@@ -172,7 +172,6 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
 });
 
 // /products/item/item_id delete route
-/products/item/item_id delete route
 router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
   Promise.all([
     User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),

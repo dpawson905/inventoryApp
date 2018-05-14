@@ -171,20 +171,20 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
   }
 });
 
-// /products/item/item_id delete route
-// router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
-//   Promise.all([
-//     User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
-//     Item.findByIdAndRemove(req.params.id)
-//   ])
-//     .then(() => {
-//       req.flash("success", "Item Deleted");
-//       res.redirect("back");
-//     })
-//     .catch(err => {
-//       return console.log("err", err.stack);
-//     });
-// });
+/products/item/item_id delete route
+router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
+  Promise.all([
+    User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
+    Item.findByIdAndRemove(req.params.id)
+  ])
+    .then(() => {
+      req.flash("success", "Item Deleted");
+      res.redirect("back");
+    })
+    .catch(err => {
+      return console.log("err", err.stack);
+    });
+});
 
 // router.delete("/item/:id", middleware.isLoggedIn, async(req, res) => {
 //   try {
@@ -211,53 +211,5 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
 //     console.log("err", err);
 //   }
 // });
-
-// router.delete("/item/:id", (req, res) => {
-//   new Promise((resolve, reject) => {
-//     User.update({ _id: req.user._id }, { $pull: { items: req.params.id } })
-//     .then(() => {
-//       Item.findById(req.params.id, (err, item) => {
-//         if (err) {
-//           console.log(err);
-//         }
-//         fs.unlinkSync(__dirname + "../../public" + item.image);
-//       });
-//     }).then(() => {
-//       Item.findByIdAndRemove(req.params.id);
-//     });
-//     fs
-//       .createReadStream(
-//         __dirname + "../../public/uploads/backup/no-image.png"
-//       )
-//       .pipe(
-//         fs.createWriteStream(
-//           __dirname + "../../public/uploads/no-img/no-image.png"
-//         )
-//       );
-//   });
-// });
-
-router.delete("/item/:id", async (req, res) => {
-  return Promise.all([
-    Item.findByIdAndRemove(req.params.id),
-    User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
-    Item.findById(req.params.id, (err, item) => {
-      if (err) {
-        console.log(err);
-      }
-      fs.unlinkSync(__dirname + "../../public" + item.image);
-    }),
-    fs
-      .createReadStream(__dirname + "../../public/uploads/backup/no-image.png")
-      .pipe(
-        fs.createWriteStream(
-          __dirname + "../../public/uploads/no-img/no-image.png"
-        )
-      )
-  ]).then(() => {
-    req.flash("success", "Item Deleted");
-    res.redirect("/products/inventory/" + req.user._id);
-  });
-});
 
 module.exports = router;

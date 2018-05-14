@@ -172,41 +172,44 @@ router.post("/item/:id", middleware.isLoggedIn, async (req, res) => {
 });
 
 // /products/item/item_id delete route
-router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
-  Promise.all([
-    User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
-    Item.findByIdAndRemove(req.params.id)
-  ])
-    .then(() => {
-      req.flash("success", "Item Deleted");
-      res.redirect("back");
-    })
-    .catch(err => {
-      return console.log("err", err.stack);
-    });
-});
-
-// router.delete("/item/:id", middleware.isLoggedIn, async(req, res) => {
-//   try {
-//     let id = req.params.id;
-//     let item = await Item.findById(id);
-
-//     await User.update({ _id: req.user._id }, { $pull: { items: req.params.id } });
-//     await fs.unlinkSync(__dirname + "../../public" + item.image);
-//     await Item.findByIdAndRemove(id);
-//     await fs
-//       .createReadStream(__dirname + "../../public/uploads/backup/no-image.png")
-//       .pipe(
-//         fs.createWriteStream(
-//           __dirname + "../../public/uploads/no-img/no-image.png"
-//         )
-//       )
-
-//     req.flash("success", "Item Sold");
-//     res.redirect("/products/inventory/" + req.user._id);
-//   } catch (err) {
-//     console.log("err", err);
-//   }
+// router.delete("/item/:id", middleware.isLoggedIn, (req, res) => {
+//   Promise.all([
+//     User.update({ _id: req.user._id }, { $pull: { items: req.params.id } }),
+//     Item.findByIdAndRemove(req.params.id)
+//   ])
+//     .then(() => {
+//       req.flash("success", "Item Deleted");
+//       res.redirect("back");
+//     })
+//     .catch(err => {
+//       return console.log("err", err.stack);
+//     });
 // });
+
+router.delete("/item/:id", middleware.isLoggedIn, async(req, res) => {
+  try {
+    await Item.findById(req.params.id, (err, item) => {
+      if(err) {
+        console.log(err)
+      }
+      fs.unlinkSync(__dirname + "../../public" + item.image);
+    });
+
+    await User.update({ _id: req.user._id }, { $pull: { items: req.params.id } });
+    await Item.findByIdAndRemove(req.params.id);
+    fs
+      .createReadStream(__dirname + "../../public/uploads/backup/no-image.png")
+      .pipe(
+        fs.createWriteStream(
+          __dirname + "../../public/uploads/no-img/no-image.png"
+        )
+      )
+
+    req.flash("success", "Item Deleted");
+    res.redirect("/products/inventory/" + req.user._id);
+  } catch (err) {
+    console.log("err", err);
+  }
+});
 
 module.exports = router;
